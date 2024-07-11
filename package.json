@@ -4,6 +4,8 @@
   "description": "authentication and authorization microservice for yshade.ai",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pm2 start app.js --watch",
     "start": "npx functions-framework --target=yauth"
   },
   "keywords": [
@@ -11,7 +13,7 @@
   ],
   "author": "rofy",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@google-cloud/firestore": "^7.8.0",
     "@google-cloud/functions-framework": "^3.4.1",
     "@google-cloud/secret-manager": "^5.6.0",
@@ -19,5 +21,5 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jose": "^5.6.3"
-  }
+  }    
 }
