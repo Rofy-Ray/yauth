@@ -12,4 +12,4 @@ app.listen(3000, () => {
 });
 
 // exports.handler = app;
-module.exports = app;
+module.exports = { app };
