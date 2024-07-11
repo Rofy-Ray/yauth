@@ -11,4 +11,5 @@ app.listen(3000, () => {
   console.log('yAuth Microservice is listening on port 3000');
 });
 
-exports.handler = app;
+// exports.handler = app;
+module.exports = app;
