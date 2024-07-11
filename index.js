@@ -7,11 +7,11 @@ const app = express();
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 
-const handler = (req, res) => {
-  app(req, res);
-};
+// const yauth = (req, res) => {
+//   app(req, res);
+// };
 
-exports.handler = handler;
+exports.yauth = app;
 
 // app.listen(3000, () => {
 //   console.log('yAuth Microservice is listening on port 3000');
