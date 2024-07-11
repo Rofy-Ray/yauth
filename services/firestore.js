@@ -1,12 +1,31 @@
 require('dotenv').config();
 const Firestore = require('@google-cloud/firestore');
+const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 
-const firestore = new Firestore({
-  projectId: process.env.FIRESTORE_PROJECT_ID,
-  keyFilename: 'keys/firestore.json',
-});
+const projectID = process.env.PROJECT_ID;
+const secretID = process.env.SECRET_ID;
 
-module.exports.firestoreDB = firestore;
+const secretResourceName = `projects/${projectID}/secrets/${secretID}/versions/latest`;
+
+async function getSecret() {
+  const client = new SecretManagerServiceClient();
+  const secret = await client.accessSecretVersion({
+    name: secretResourceName
+  });
+  const firestoreKeys = JSON.parse(secret[0].payload.data);
+  return firestoreKeys;
+}
+
+async function connectFirestore() {
+  const firestoreKeys = await getSecret();
+  const firestore = new Firestore({
+    projectId: process.env.FIRESTORE_PROJECT_ID,
+    keyFilename: firestoreKeys,
+  });
+  module.exports.firestoreDB = firestore;
+}
+
+connectFirestore();
 
 module.exports.createUserDoc = async (user) => {
   try {
