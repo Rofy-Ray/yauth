@@ -2,7 +2,7 @@
   "name": "yauth",
   "version": "1.0.0",
   "description": "authentication and authorization microservice for yshade.ai",
-  "main": "function.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "pm2 start app.js --watch",
