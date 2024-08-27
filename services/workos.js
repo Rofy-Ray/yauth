@@ -3,14 +3,16 @@ const WorkOS = require('@workos-inc/node').WorkOS;
 
 const workos = new WorkOS(process.env.WORKOS_API_KEY);
 
-module.exports.createUser = async (email, password, firstName, lastName) => {
+module.exports.createUser = async (userData) => {
   try {
-    return await workos.userManagement.createUser({
-      email,
-      password,
-      firstName,
-      lastName,
-    });
+    const createUserPayload = {};
+
+    if ('email' in userData) createUserPayload.email = userData.email;
+    if ('password' in userData) createUserPayload.password = userData.password;
+    if ('firstName' in userData) createUserPayload.firstName = userData.firstName;
+    if ('lastName' in userData) createUserPayload.lastName = userData.lastName;
+
+    return await workos.userManagement.createUser(createUserPayload);
   } catch (error) {
     throw error;
   }
