@@ -16,6 +16,34 @@ module.exports.createUser = async (email, password, firstName, lastName) => {
   }
 };
 
+module.exports.updateUser = async (userId, updateData) => {
+  try {
+    const updatePayload = {
+      userId: userId, 
+    };
+
+    if ('email' in updateData) updatePayload.email = updateData.email;
+    if ('password' in updateData) updatePayload.password = updateData.password;
+    if ('firstName' in updateData) updatePayload.firstName = updateData.firstName;
+    if ('lastName' in updateData) updatePayload.lastName = updateData.lastName;
+    if ('emailVerified' in updateData) updatePayload.emailVerified = updateData.emailVerified;
+
+    return await workos.userManagement.updateUser(updatePayload);
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.deleteUser = async (userId) => {
+  try {
+    return await workos.userManagement.deleteUser({
+      userId
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports.listUsers = async (email) => {
     const filter = email ? { email } : {};
     try {

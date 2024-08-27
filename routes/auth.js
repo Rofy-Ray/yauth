@@ -6,7 +6,7 @@ const jose = require('jose');
 
 
 const authRouter = express.Router();
-const { createUser, listUsers, sendVerificationEmail, verifyEmail, authenticateUser, getJwksUrl, signOut } = workos;
+const { createUser, updateUser, deleteUser, listUsers, sendVerificationEmail, verifyEmail, authenticateUser, getJwksUrl, signOut } = workos;
 // const { createUserDoc } = firestore;
 
 authRouter.use(express.json());
@@ -35,6 +35,28 @@ authRouter.post('/signup', async (req, res) => {
 		console.error('Error during signup:', error);
   		res.status(500).send(error.message);
 	}
+});
+
+authRouter.put('/update', async (req, res) => {
+    const { userId, ...updateData } = req.body;
+    try {
+        const updatedUser = await updateUser(userId, updateData);
+        res.send({ message: 'User updated successfully', user: updatedUser });
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(400).send(error.message);
+    }
+});
+
+authRouter.delete('/delete', async (req, res) => {
+    const { userId } = req.body;
+    try {
+        await deleteUser(userId);
+        res.send({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(400).send(error.message);
+    }
 });
 
 authRouter.post('/verify', async (req, res) => {
