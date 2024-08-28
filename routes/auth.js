@@ -6,7 +6,7 @@ const jose = require('jose');
 
 
 const authRouter = express.Router();
-const { createUser, updateUser, deleteUser, listUsers, sendVerificationEmail, verifyEmail, authenticateUser, getJwksUrl, signOut } = workos;
+const { createUser, updateUser, deleteUser, listUsers, sendVerificationEmail, verifyEmail, authenticateUser, signOut } = workos;
 // const { createUserDoc } = firestore;
 
 authRouter.use(express.json());
